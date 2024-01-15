@@ -2,6 +2,10 @@
 
 A http/https proxies list that update every 2 hours
 
+## Setup
+
+Uncomment the schedule part in the workflow
+
 ## Website
 
 See the proxy list as a table [here](https://yoannchb-pro.github.io/https-proxies/)
@@ -15,20 +19,21 @@ See the typescript package to get proxies with custom filters [here](https://git
 Generation logs [here](./bot.logs)
 
 ```txt
-Last update: Sat Jun 10 2023 22:55:36 GMT-0400 (heure d’été de l’Est nord-américain)
-Number of proxy: 114
-Number of https proxy: 48
-Number of http proxy: 66
-Number of proxy by Anonymity: Unknown -> 0, Low -> 41, Average -> 18, High -> 55
-Average speed: 636 ms
-Countries (22): US, ZA, GB, KR, DE, ID, SG, FI, ES, VN, SV, NO, HK, CA, AR, CN, CM, LY, PE, CO, IN, FR
-Success (5):
-  - https://www.proxy-list.download
-  - https://www.us-proxy.org
-  - https://proxyscrape.com/free-proxy-list
-  - https://free-proxy-list.net/
-  - https://geonode.com/free-proxy-list
-Failed (0):
+Last update: {%= new Date(data.lastUpdate) %}
+Number of proxy: {%= data.count %}
+Number of https proxy: {%= httpsProxiesLength %}
+Number of http proxy: {%= httpProxiesLength %}
+Number of proxy by Anonymity: Unknown -> {%= anonymity.unknown %}, Low -> {%= anonymity.low %}, Average -> {%= anonymity.average %}, High -> {%= anonymity.high %}
+Average speed: {%= averageSpeed %} ms
+Countries ({%= countries.length %}): {%= countries.join(", ") %}
+Success ({%= data.successList.length %}):
+{%_ for(const success of data.successList){ %}
+  - {%= success _%}
+{%_ } %}
+Failed ({%= data.failedList.length %}):
+{%_ for(const failed of data.failedList){ %}
+  - {%= failed _%}
+{%_ } %}
 ```
 
 ## Type
